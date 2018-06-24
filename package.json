@@ -1,0 +1,35 @@
+{
+  "name": "whatIsIt",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "babel-plugin-react-native-classname-to-style": "^1.2.1",
+    "babel-plugin-react-native-platform-specific-extensions": "^1.1.0",
+    "jest-expo": "~27.0.0",
+    "node-sass": "^4.9.0",
+    "react-native-sass-transformer": "^1.2.1",
+    "react-native-scripts": "1.14.0",
+    "react-test-renderer": "16.3.1"
+  },
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "eslint": "^5.0.0",
+    "expo": "^27.0.1",
+    "react": "16.3.1",
+    "react-native": "~0.55.2",
+    "react-native-material-kit": "^0.5.1",
+    "react-native-open-file": "^1.0.5",
+    "react-navigation": "^2.5.1"
+  }
+}
