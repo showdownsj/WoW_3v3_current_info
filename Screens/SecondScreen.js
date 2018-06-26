@@ -9,9 +9,10 @@ export default class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     const data = this.props.navigation.state.params.data.data;
-    const icon = this.props.navigation.state.params.icon;
+    const statistics = this.props.navigation.state.params.statistics;
     this.state =  {data:data, 
-                  icon: `https://render-eu.worldofwarcraft.com/character/${data.thumbnail}` };
+                  icon: `https://render-eu.worldofwarcraft.com/character/${data.thumbnail}`,
+                  statistics: statistics };
   }
 
   render() {
@@ -26,6 +27,7 @@ export default class ProfileScreen extends React.Component {
             {key: `Rating: ${this.state.data.pvp.brackets.ARENA_BRACKET_3v3.rating}`},
             {key: `Games played: ${this.state.data.pvp.brackets.ARENA_BRACKET_3v3.seasonPlayed}`},
             {key: `Wins: ${this.state.data.pvp.brackets.ARENA_BRACKET_3v3.seasonWon}`},
+            {key: `Highest 3 man personal rating: ${this.state.statistics.data.statistics.subCategories[9].subCategories[0].statistics[24].quantity}`}
           ]}
           renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
         />

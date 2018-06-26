@@ -1,0 +1,150 @@
+$duration:4s;
+
+html, body{
+  height: 100%;
+}
+  
+.container{
+  background: #211510;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Helvetica Neue;
+}
+  
+h1{
+  font-size: 2em;
+  color: #eee;
+  display: inline-block;
+}
+
+
+.arenaOption{
+  position: relative;
+  height: 40px;
+  width: 75px;
+  margin-left: 10px;
+  padding: 5px;
+  border-radius: 2px;
+  background-color: #211510;
+  color: #fff;
+  border-color: #f8b700;
+  //font-family: Inconsolata, monospace;
+  color: #f8b700;
+  font-size: 14px;
+  text-align:center;
+}
+.arenaOption select {
+  display: none; 
+}
+
+.button{
+  width: 95px;
+  height: 35px;
+  padding: 5px 10px;
+  margin-top: 15px;
+ // border: none;
+  color: #FAFAFA;
+  font-size:14px;
+  //transition: background 0.25s;
+  animation: buttonLight 1s infinite ease-out;
+  border-radius: 5%;
+}
+
+.button:hover{
+  filter: blur(0.5px);
+   animation: buttonLight 1s infinite ease-out reverse;
+}
+
+
+.characterN{
+  height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 2px;
+  background-color: #211510;
+  border-color: #f8b700;
+  color:#f8b700;
+  font-size: 14px;
+  font-style:italic;
+  //font-family: Inconsolata, monospace;
+
+}
+.characterN::placeholder{
+ // font-family: Inconsolata, monospace;
+  color: #f8b700;
+  font-style:italic;
+  font-size: 14px;
+}
+
+
+@keyframes buttonLight{
+  0%{
+     background: linear-gradient(to top right,#FFAB91, #FF7043, #BF360C,#B71C1C);
+    
+  }
+  
+  25%{
+     background: linear-gradient(to top right, #B71C1C, #FFAB91, #FF7043, #BF360C);
+     
+  }
+  50%{
+     background: linear-gradient(to top right, #BF360C, #B71C1C, #FFAB91, #FF7043);
+  }
+  75%{
+     background: linear-gradient(to top right, #FF7043,#BF360C, #B71C1C, #FFAB91);
+  }
+  100%{
+     background: linear-gradient(to top right,#FFAB91, #FF7043, #BF360C,#B71C1C);
+    
+  }
+
+}
+
+.boxes{
+  margin-top:20px;
+  display: flex;
+  flex-direction:row;
+}
+.boxes1{
+
+ 
+  display: flex;
+  flex-direction:row;
+}
+.box {
+  height: 20px;
+
+  width: 20px;
+
+  background-color: #fff;
+  transform-origin: top right;
+  border: 2px solid black;
+  animation: box-flip $duration ease-in-out infinite;
+  
+ /* &:nth-child(2) {
+    animation-delay: #{$duration / -2};
+  }*/
+}
+
+@keyframes box-flip {
+  #{percentage(1/6)} {
+    transform: rotate(0);
+  }
+  #{percentage(2/6)} {
+    transform: rotate(-45deg);
+  }
+  #{percentage(3/6)} {
+    transform: rotate(-90deg);
+  }
+  #{percentage(4/6)} {
+    transform: rotate(-90deg);
+  }
+  #{percentage(5/6)} {
+    transform: rotate(-270deg);
+  }
+  #{percentage(6/6)} {
+    transform: rotate(-360deg);
+  }
+}
+
