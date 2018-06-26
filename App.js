@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import HomeScreen from './Screens/HomeScren';
+import HomeScreen from './Screens/HomeScreen';
 import ProfileScreen from './Screens/SecondScreen';
 
 
