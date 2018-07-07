@@ -30,6 +30,7 @@
     "react-native": "~0.55.2",
     "react-native-material-kit": "^0.5.1",
     "react-native-open-file": "^1.0.5",
+    "react-native-wheel-picker-android": "^1.1.2",
     "react-navigation": "^2.5.1"
   }
 }

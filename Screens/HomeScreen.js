@@ -17,18 +17,26 @@ const generateRand = () => {
 };
 
 
-const getFromBlizz = async (realm, name) => {
-  const pathCharacterInfo = `https://eu.api.battle.net/wow/character/${realm}/${name}?fields=pvp&locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr`;//'https://us.api.battle.net/wow/leaderboard/3v3?locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr';
-  const result = await axios.get(pathCharacterInfo);
-  // console.log(result);
+const getCharacterFields = async (realm, name, field) => {
+  const path = `https://eu.api.battle.net/wow/character/${realm}/${name}?fields=${field}&locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr`;
+  //'https://us.api.battle.net/wow/leaderboard/3v3?locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr';
+  const result = await axios.get(path);
   return result;
 };
 
-const getStatBlizz = async (realm, name) => {
-  const path = `https://eu.api.battle.net/wow/character/${realm}/${name}?fields=statistics&locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr`;
-  const result = await axios.get(path);
-  // console.log(result);
-  return result;
+const getClassesList = async () => {
+  const path = 'https://eu.api.battle.net/wow/data/character/classes?locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr';
+  return (await axios.get(path));
+};
+
+const getAchievesList = async () => {
+  const path = 'https://eu.api.battle.net/wow/data/character/achievements?locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr';
+  return (await axios.get(path));
+};
+
+const getLeaderboard = async (mode) => {
+  const path = `https://eu.api.battle.net/wow/leaderboard/3v3?locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr`;
+  return (await axios.get(path));
 };
 
 export default class HomeScreen extends React.Component {
@@ -59,22 +67,46 @@ export default class HomeScreen extends React.Component {
       pvpMode: '3v3'
     };
 
-
+    this.onTests = this.onTests.bind(this);
     this.onHandlePress = this.onHandlePress.bind(this);
   }
 
 
   async onHandlePress() {
     try {
-      const data = await getFromBlizz(this.state.realm, this.state.name);
-      const stats = await getStatBlizz(this.state.realm, this.state.name);
+      const dataPvp = await getCharacterFields(this.state.realm, this.state.name, 'pvp');
+      const dataStats = await  getCharacterFields(this.state.realm, this.state.name, 'statistics');
     // console.log(JSON.stringify(stats));
       //console.log(stats.data.statistics.subCategories[9].subCategories[0].statistics[24].quantity);
-      this.props.navigation.navigate('Profile', { data: data, statistics: stats, pvpMode: this.state.pvpMode });
+      this.props.navigation.navigate('Profile', { data: dataPvp, statistics: dataStats, pvpMode: this.state.pvpMode });
     }
     catch (err) {
       console.log(err);
       this.setState({ error: true });
+    }
+  }
+
+  async onTests() {
+    try{
+        const data = await getAchievesList();
+        //console.log(JSON.stringify(data.data));
+        axios.post('http://172.22.4.177:19005/achieves', {
+          data: JSON.stringify(data)
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        /*await axios({
+          method: 'post',
+          url: 'http://172.22.4.177/achieves',
+          data: data
+        });*/
+    }
+    catch(err){
+
     }
   }
 
@@ -99,11 +131,11 @@ export default class HomeScreen extends React.Component {
           clearTextOnFocus={true}
           underlineColorAndroid='transparent'
         />
-        <Picker selectedValue={this.state.realm} onValueChange={(itemValue, itemIndex) => { this.setState({ realm: itemValue }); Keyboard.dismiss} } style={styles.picker} >
+        <Picker selectedValue={this.state.realm} onValueChange={(itemValue, itemIndex) => { this.setState({ realm: itemValue }); Keyboard.dismiss()} } style={styles.picker} >
             {this.state.pickerData}
         </Picker>
         <Picker selectedValue={this.state.pvpMode}
-          onValueChange={(itemValue, itemIndex) =>{ this.setState({ pvpMode: itemValue }); Keyboard.dismiss} }
+          onValueChange={(itemValue, itemIndex) =>{ this.setState({ pvpMode: itemValue }); Keyboard.dismiss()} }
           style={styles.picker}>
           <Picker.Item label='2v2' value='2v2' />
           <Picker.Item label='3v3' value='3v3' />
@@ -111,6 +143,9 @@ export default class HomeScreen extends React.Component {
         </Picker>
         <TouchableOpacity onPress={this.onHandlePress} style={styles.button} >
           <Text style={{ color: '#f8b700' }}> Press </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.onTests} style={styles.button} >
+          <Text style={{ color: '#f8b700' }}> TestGetRequests </Text>
         </TouchableOpacity>
       </View>
     );

@@ -1,6 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, FlatList, Image } from 'react-native';
 
+const CLASSES_COLORS = [
+    '#c79c6e', //war
+    '#f58cba', //pal
+    '#abd473', //hunter
+    '#fff569',//rogue
+    '#ffffff',//priest
+    '#c41f3b',//dk
+    '#0070de',//shaman
+    '#69ccf0',//mage
+    '#9482c9',//warlock
+    '#00ff96',//monk
+    '#ff7d0a', //druid
+    '#a330c9', //dh
+];
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -18,6 +32,7 @@ export default class ProfileScreen extends React.Component {
     const pvpMode = this.props.navigation.state.params.pvpMode;
     this.state = {
       data: this._parseDataViaPVPMode(pvpMode, data, statistics),
+      class: data.class - 1,
       icon: `https://render-eu.worldofwarcraft.com/character/${data.thumbnail}`
     };
   }
@@ -68,9 +83,11 @@ export default class ProfileScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Image source={{ uri: this.state.icon }} style={{ width: 84, height: 84, marginTop: 10 }} />
+        <Text style={{  padding: 10, fontSize: 16, height: 44, color: CLASSES_COLORS[this.state.class]}}>
+            {this.state.data.name}
+        </Text>
         <FlatList
           data={[
-            { key: `${this.state.data.name}` },
             { key: `Rating: ${this.state.data.rating}` },
             { key: `Games played: ${this.state.data.seasonPlayed}` },
             { key: `Wins: ${this.state.data.seasonWon}` },
