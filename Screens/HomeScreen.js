@@ -10,7 +10,7 @@ https://eu.api.battle.net/wow/data/character/classes?locale=en_GB&apikey=6x24nk9
 https://eu.api.battle.net/wow/data/character/achievements?locale=en_GB&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr allachieve
 https://us.api.battle.net/wow/leaderboard/3v3?locale=en_US&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr    leaderdb.
 https://us.api.battle.net/wow/character/test-realm/Peratryn?fields=achievements&locale=en_US&apikey=6x24nk9hj6d4b7efp8a35rsxavtq7twr
- */
+test */
 YellowBox.ignoreWarnings(['Warning: Each child in an array or iterator should have a unique "key" prop', 'Warning: Failed prop type: Invalid props.style key `color` supplied to `View`']);
 const generateRand = () => {
   return (Math.random() * 256) ^ 0;
