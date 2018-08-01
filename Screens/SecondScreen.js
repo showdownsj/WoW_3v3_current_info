@@ -49,9 +49,9 @@ export default class ProfileScreen extends React.Component {
           rating: data.pvp.brackets.ARENA_BRACKET_3v3.rating,
           seasonPlayed: data.pvp.brackets.ARENA_BRACKET_3v3.seasonPlayed,
           seasonWon: data.pvp.brackets.ARENA_BRACKET_3v3.seasonWon,
-          highestRating: statistics.data.statistics.subCategories[9].subCategories[0].statistics[24].quantity
+          highestRating: statistics.data.statistics.subCategories[9].subCategories[0].statistics[23].quantity
         };
-        return arenaData; break;
+        return arenaData; 
 
       case '2v2':
         arenaData = {
@@ -59,9 +59,9 @@ export default class ProfileScreen extends React.Component {
           rating: data.pvp.brackets.ARENA_BRACKET_2v2.rating,
           seasonPlayed: data.pvp.brackets.ARENA_BRACKET_2v2.seasonPlayed,
           seasonWon: data.pvp.brackets.ARENA_BRACKET_2v2.seasonWon,
-          highestRating: statistics.data.statistics.subCategories[9].subCategories[0].statistics[25].quantity
+          highestRating: statistics.data.statistics.subCategories[9].subCategories[0].statistics[24].quantity
         };
-        return arenaData; break;
+        return arenaData; 
 
       case 'RBG':
         arenaData = {
@@ -70,7 +70,7 @@ export default class ProfileScreen extends React.Component {
           seasonPlayed: data.pvp.brackets.ARENA_BRACKET_RBG.seasonPlayed,
           seasonWon: data.pvp.brackets.ARENA_BRACKET_RBG.seasonWon
         };
-        return arenaData; break;
+        return arenaData;
 
       default: return null;
     }
