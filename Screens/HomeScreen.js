@@ -39,6 +39,8 @@ const getLeaderboard = async (mode) => {
   return (await axios.get(path));
 };
 
+
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Welcome',
@@ -86,7 +88,7 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  async getTitles(){
+  async getTitlesList(){
     const data = await getAchievesList();//getCharacterFields("Karazhan", "Jinkis", 'achievements');
     const pvpAchi = data.data.achievements[12].categories[3];
     const duelistList = [];
@@ -102,7 +104,42 @@ export default class HomeScreen extends React.Component {
           roneList.push(achi);
       }
     }
-    return {roneList, gladiatorList, duelistList};
+    return { roneList: roneList.slice(-4,-1),
+             gladiatorList: gladiatorList.slice(-4,-1), 
+             duelistList: duelistList.slice(-4,-1)
+           };
+  }
+  
+  async getTitles(){
+    console.log('asd');
+    const titleList = await this.getTitlesList();
+    const charAchis = await getCharacterFields(this.state.realm, this.state.name, 'achievements');
+    const charTitles = charAchis.data.achievements.achievementsCompleted; 
+   
+    const roneCompleted = [];
+    const gladCompleted = [];
+    const duelistCompleted = [];
+    for(let title of titleList.roneList){
+      if(charTitles.includes(title.id)){
+          roneCompleted.push(title);
+      }
+    }
+
+    for(let title of titleList.gladiatorList){
+      if(charTitles.includes(title.id)){
+        gladCompleted.push(title);
+      }
+    }
+
+    for(let title of titleList.duelistList){
+      if(charTitles.includes(title.id)){
+        duelistCompleted .push(title);
+      }
+    }
+    return { rone: roneCompleted,
+             gladiator: gladCompleted,
+             duelist: duelistCompleted
+    }
   }
 
   async onTests() {
@@ -110,37 +147,22 @@ export default class HomeScreen extends React.Component {
      // const data = await getLeaderboard(this.state.pvpMode);
       //this.props.navigation.navigate('Leaderboards', { data: data.data, pvpMode: this.state.pvpMode });
         //const data = await getAchievesList();
-        const data = await getAchievesList();//getCharacterFields("Karazhan", "Jinkis", 'achievements');
-        const pvpAchi = data.data.achievements[12].categories[3];
+        const data = await this.getTitles();
+        //console.log(JSON.stringify(data));
         //console.log(pvpAchi);
-        /* axios.post('http://172.22.4.177:19005/achieves', {
-          data: JSON.stringify(pvpAchi)
+         axios.post('http://172.22.4.177:19005/achieves', {
+          data: JSON.stringify(data)
         })
         .then(function (response) {
           console.log(response);
         })
         .catch(function (error) {
           console.log(error);
-        });  */
-        const duelistList = [];
-        const gladiatorList = [];
-        const roneList = [];
-        for (let achi of pvpAchi.achievements){
-          //console.log(achi.title);
-          if(!achi.title.indexOf('Duelist:')){
-              duelistList.push(achi);
-              console.log(achi.title);
-          } else if(!achi.title.indexOf('Gladiator:')) {
-              gladiatorList.push(achi);
-              console.log(achi.title);
-          } else if(achi.title.indexOf('Gladiator:') > 0){
-              roneList.push(achi);
-              console.log(achi.title);
-          }
-          
+        });  
+   
           //console.log(JSON.stringify(duelistList),JSON.stringify(gladiatorList), JSON.stringify(roneList));
           
-        }
+        
        // console.log(JSON.stringify(titles));
     }
     catch(err){
