@@ -78,9 +78,10 @@ export default class HomeScreen extends React.Component {
     try {
       const dataPvp = await getCharacterFields(this.state.realm, this.state.name, 'pvp');
       const dataStats = await  getCharacterFields(this.state.realm, this.state.name, 'statistics');
+      const titles = await this.getTitles();
       // console.log(JSON.stringify(stats));
       //console.log(stats.data.statistics.subCategories[9].subCategories[0].statistics[24].quantity);
-      this.props.navigation.navigate('Profile', { data: dataPvp, statistics: dataStats, pvpMode: this.state.pvpMode });
+      this.props.navigation.navigate('Profile', { data: dataPvp, statistics: dataStats, pvpMode: this.state.pvpMode, titles });
     }
     catch (err) {
       console.log(err);
@@ -104,18 +105,17 @@ export default class HomeScreen extends React.Component {
           roneList.push(achi);
       }
     }
-    return { roneList: roneList.slice(-4,-1),
-             gladiatorList: gladiatorList.slice(-4,-1), 
-             duelistList: duelistList.slice(-4,-1)
+    return {// roneList: roneList.slice(-4,-1),
+             roneList: roneList,
+             gladiatorList: gladiatorList, 
+             duelistList: duelistList
            };
   }
   
   async getTitles(){
-    console.log('asd');
     const titleList = await this.getTitlesList();
     const charAchis = await getCharacterFields(this.state.realm, this.state.name, 'achievements');
     const charTitles = charAchis.data.achievements.achievementsCompleted; 
-   
     const roneCompleted = [];
     const gladCompleted = [];
     const duelistCompleted = [];
@@ -148,7 +148,7 @@ export default class HomeScreen extends React.Component {
       //this.props.navigation.navigate('Leaderboards', { data: data.data, pvpMode: this.state.pvpMode });
         //const data = await getAchievesList();
         const data = await this.getTitles();
-        //console.log(JSON.stringify(data));
+        console.log(JSON.stringify(data));
         //console.log(pvpAchi);
          axios.post('http://172.22.4.177:19005/achieves', {
           data: JSON.stringify(data)
